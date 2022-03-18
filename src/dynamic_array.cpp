@@ -37,27 +37,28 @@ namespace assignment {
     delete[] data_;
     data_ = data_arr;
     data_[size_] = value;
+    delete[] data_arr;
     size_++;
   }
 
   bool DynamicArray::Insert(int index, int value) {
     if (index > size_ || index < 0) {
       return false;
-    } else {
-      if (size_ >= capacity_) {
-        capacity_ += kCapacityGrowthCoefficient;
-      }
-      int* data_arr = new int[capacity_];
-      for (int i = 0; i < index; i++) {
-        data_arr[i] = data_[i];
-      }
-      data_arr[index] = value;
-      for (int i = index; i < size_; i++) {
-        data_arr[i + 1] = data_[i];
-      }
-      data_ = data_arr;
-      size_++;
     }
+    if (size_ >= capacity_) {
+      capacity_ += kCapacityGrowthCoefficient;
+    }
+    int* data_arr = new int[capacity_];
+    for (int i = 0; i < index; i++) {
+      data_arr[i] = data_[i];
+    }
+    data_arr[index] = value;
+    for (int i = index; i < size_; i++) {
+      data_arr[i + 1] = data_[i];
+    }
+    data_ = data_arr;
+    delete[] data_arr;
+    size_++;
     return true;
   }
 

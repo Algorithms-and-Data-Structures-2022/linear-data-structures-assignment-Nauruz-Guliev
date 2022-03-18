@@ -71,7 +71,7 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::Remove(int index) {
-    if (index > size_-1  || index < 0 || size_ == 0) {
+    if (index >= size_  || index < 0 || size_ == 0) {
       return std::nullopt;
     }
     int deletedElement = data_[index];

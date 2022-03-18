@@ -64,7 +64,7 @@ namespace assignment {
   }
 
   std::optional<int> LinkedList::Remove(int index) {
-    if (index >= size_ || index < 0) {
+    if (index > size_-1 || index < 0) {
       return std::nullopt;
     } else {
       Node* prev_node = front_;
@@ -97,7 +97,7 @@ namespace assignment {
   }
 
   std::optional<int> LinkedList::Get(int index) const {
-    if (index+1 > size_ || index < 0 || size_ == 0) {
+    if (index > size_-1 || index < 0 || size_ == 0) {
       return std::nullopt;
     } else {
       Node* node = front_;

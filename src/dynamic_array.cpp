@@ -29,16 +29,17 @@ namespace assignment {
   void DynamicArray::Add(int value) {
     if (size_ == capacity_) {
       capacity_ += kCapacityGrowthCoefficient;
+    } else {
+      int* data_arr = new int[capacity_];
+      for (int i = 0; i < size_; i++) {
+        data_arr[i] = data_[i];
+      }
+      delete[] data_;
+      data_ = data_arr;
+      data_[size_] = value;
+      delete[] data_arr;
+      size_++;
     }
-    int* data_arr = new int[capacity_];
-    for (int i = 0; i < size_; i++) {
-      data_arr[i] = data_[i];
-    }
-    delete[] data_;
-    data_ = data_arr;
-    data_[size_] = value;
-    delete[] data_arr;
-    size_++;
   }
 
   bool DynamicArray::Insert(int index, int value) {

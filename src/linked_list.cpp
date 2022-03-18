@@ -51,7 +51,7 @@ namespace assignment {
   }
 
   bool LinkedList::Set(int index, int new_value) {
-    if (index+1 >= size_ || index < 0 || size_ == 0) {
+    if (index+1 > size_ || index < 0 || size_ == 0) {
       return false;
     } else {
       Node* node = front_;

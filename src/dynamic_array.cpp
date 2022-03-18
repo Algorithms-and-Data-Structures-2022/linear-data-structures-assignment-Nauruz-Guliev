@@ -47,13 +47,13 @@ namespace assignment {
       if (size_ >= capacity_) {
         capacity_ += kCapacityGrowthCoefficient;
       }
-      int* data_arr =  new int[capacity_];
-      for (int i =0; i <index;i++) {
+      int* data_arr = new int[capacity_];
+      for (int i = 0; i < index; i++) {
         data_arr[i] = data_[i];
       }
       data_arr[index] = value;
-      for (int i = index;i < size_; i++) {
-        data_arr[i+1]  = data_[i];
+      for (int i = index; i < size_; i++) {
+        data_arr[i + 1] = data_[i];
       }
       data_ = data_arr;
       size_++;
@@ -71,21 +71,20 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::Remove(int index) {
-    if (index+1 > size_ || index < 0 || size_ == 0) {
+    if (index > (size_ - 1) || index < 0 || size_ == 0) {
       return std::nullopt;
-    } else {
-      int deletedElement = data_[index];
-      int * data_arr = new int[capacity_];
-      for (int i = 0; i < index; i++) {
-        data_arr[i] = data_[i];
-      }
-      for (int i = index; i<size_-1;i++){
-        data_arr[i] = data_[i+1];
-      }
-      data_ = data_arr;
-      size_--;
-      return deletedElement;
     }
+    int deletedElement = data_[index];
+    int* data_arr = new int[capacity_];
+    for (int i = 0; i < index; i++) {
+      data_arr[i] = data_[i];
+    }
+    for (int i = index; i < size_ - 1; i++) {
+      data_arr[i] = data_[i + 1];
+    }
+    data_ = data_arr;
+    size_--;
+    return deletedElement;
   }
 
   void DynamicArray::Clear() {
@@ -93,7 +92,7 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::Get(int index) const {
-    if (index > size_-1 || index < 0 || size_ == 0) {
+    if (index > size_ - 1 || index < 0 || size_ == 0) {
       return std::nullopt;
     } else {
       return data_[index];
@@ -163,4 +162,4 @@ namespace assignment {
     return {data_, data_ + capacity_};
   }
 
-}  // namespace assignment
+} 

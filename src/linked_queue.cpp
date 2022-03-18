@@ -23,7 +23,8 @@ namespace assignment {
     if (size_ == 0) {
       return false;
     } else {
-      Node * next_node = front_->next;
+      Node* next_node = front_->next;
+      next_node = front_->next;
       front_ = next_node;
       size_--;
       return true;

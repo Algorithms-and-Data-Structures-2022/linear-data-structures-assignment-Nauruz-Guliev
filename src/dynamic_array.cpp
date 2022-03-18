@@ -92,11 +92,11 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::Get(int index) const {
-    if (index+1 > size_ || index < 0 || size_ == 0) {
+    if (index < 0 || index>= size_) {
       return std::nullopt;
-    } else {
-      return data_[index];
     }
+      return data_[index];
+
   }
 
   std::optional<int> DynamicArray::IndexOf(int value) const {

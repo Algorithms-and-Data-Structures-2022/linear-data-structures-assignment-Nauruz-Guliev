@@ -53,14 +53,14 @@ namespace assignment {
   bool LinkedList::Set(int index, int new_value) {
     if (index < 0 || index >= size_) {
       return false;
-    } else {
+    }
       Node* node = front_;
       for (int i = 0; i < index; i++) {
         node = node->next;
       }
       node->value = new_value;
       return true;
-    }
+
   }
 
   std::optional<int> LinkedList::Remove(int index) {

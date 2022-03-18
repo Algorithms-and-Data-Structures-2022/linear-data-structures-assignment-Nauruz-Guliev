@@ -155,15 +155,15 @@ namespace assignment {
   }
 
   Node* LinkedList::FindNode(int index) const {
-    if (index > size_-1 || index < 0 || size_ == 0) {
+    if (index >= size_ || index < 0) {
       return nullptr;
-    } else {
+    }
       Node* node = front_;
       for (int i = 0; i < index; i++) {
         node = node->next;
       }
       return node;
-    }
+
   }
 
   // ДЛЯ ТЕСТИРОВАНИЯ

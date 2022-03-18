@@ -71,7 +71,7 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::Remove(int index) {
-    if (index < 0 || index>= size_) {
+    if (index < 0 || index >= size_) {
       return std::nullopt;
     }
     int deletedElement = data_[index];
@@ -89,14 +89,15 @@ namespace assignment {
 
   void DynamicArray::Clear() {
     size_ = 0;
+    delete[] data_;
+    data_ = nullptr;
   }
 
   std::optional<int> DynamicArray::Get(int index) const {
-    if (index < 0 || index>= size_) {
+    if (index < 0 || index >= size_) {
       return std::nullopt;
     }
-      return data_[index];
-
+    return data_[index];
   }
 
   std::optional<int> DynamicArray::IndexOf(int value) const {
@@ -162,4 +163,4 @@ namespace assignment {
     return {data_, data_ + capacity_};
   }
 
-} 
+}  // namespace assignment

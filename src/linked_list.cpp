@@ -155,7 +155,7 @@ namespace assignment {
   }
 
   Node* LinkedList::FindNode(int index) const {
-    if (index >= size_ || index < 0) {
+    if (index < 0 || index >= size_) {
       return nullptr;
     }
       Node* node = front_;

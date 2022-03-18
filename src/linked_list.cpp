@@ -39,7 +39,7 @@ namespace assignment {
         size_++;
         return true;
       } else {
-        for (int i = 0; i < index-1; i++) {
+        for (int i = 0; i < index - 1; i++) {
           prev_node = prev_node->next;
         }
         node_to_insert->next = prev_node->next;
@@ -51,7 +51,7 @@ namespace assignment {
   }
 
   bool LinkedList::Set(int index, int new_value) {
-    if (index < 0 || index>= size_) {
+    if (index < 0 || index >= size_) {
       return false;
     } else {
       Node* node = front_;
@@ -64,7 +64,7 @@ namespace assignment {
   }
 
   std::optional<int> LinkedList::Remove(int index) {
-    if (index > size_-1 || index < 0) {
+    if (index > size_ - 1 || index < 0) {
       return std::nullopt;
     } else {
       Node* prev_node = front_;
@@ -97,15 +97,14 @@ namespace assignment {
   }
 
   std::optional<int> LinkedList::Get(int index) const {
-    if (index > size_-1 || index < 0 || size_ == 0) {
+    if (index > size_ - 1 || index < 0 || size_ == 0) {
       return std::nullopt;
-    } else {
-      Node* node = front_;
-      for (int i = 0; i < index; i++) {
-        node = node->next;
-      }
-      return node->value;
     }
+    Node* node = front_;
+    for (int i = 0; i < index; i++) {
+      node = node->next;
+    }
+    return node->value;
   }
 
   std::optional<int> LinkedList::IndexOf(int value) const {
@@ -158,12 +157,11 @@ namespace assignment {
     if (index < 0 || index >= size_) {
       return nullptr;
     }
-      Node* node = front_;
-      for (int i = 0; i < index; i++) {
-        node = node->next;
-      }
-      return node;
-
+    Node* node = front_;
+    for (int i = 0; i < index; i++) {
+      node = node->next;
+    }
+    return node;
   }
 
   // ДЛЯ ТЕСТИРОВАНИЯ

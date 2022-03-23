@@ -39,18 +39,12 @@ namespace assignment {
       return false;
     } else {
       if (size_ >= capacity_) {
-        capacity_ += kCapacityGrowthCoefficient;
+        Resize(capacity_+kCapacityGrowthCoefficient);
       }
-      int* data_arr = new int[capacity_];
-      for (int i = 0; i < index; i++) {
-        data_arr[i] = data_[i];
+      for (int i = size_-1; i>=index;i--) {
+        data_[i+1] = data_[i];
       }
-      data_arr[index] = value;
-      for (int i = index; i < size_; i++) {
-        data_arr[i + 1] = data_[i];
-      }
-      delete[] data_;
-      data_ = data_arr;
+      data_[index]= value;
       size_++;
       return true;
     }
@@ -91,7 +85,7 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::IndexOf(int value) const {
-    for (int i = 0; i < size_; i++) {
+    for (int i = 0; i < capacity_; i++) {
       if (data_[i] == value) {
         return i;
       }

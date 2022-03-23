@@ -70,7 +70,7 @@ SCENARIO("DynamicArray::Get") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("getting an element at any index") {
-      const int index = GENERATE_COPY(range(-10, capacity + 11));
+      const int index = GENERATE_REF(range(-10, capacity + 11));
 
       THEN("nothing should be returned") {
         CHECK_FALSE(array.Get(index).has_value());
@@ -80,7 +80,7 @@ SCENARIO("DynamicArray::Get") {
 
   AND_GIVEN("array with one or more elements") {
     const int capacity = GENERATE(range(1, 11));
-    const int size = GENERATE_COPY(range(1, capacity + 1));
+    const int size = GENERATE_REF(range(1, capacity + 1));
 
     const auto elems = utils::rand_array(size, 0, 100, true);
 
@@ -90,7 +90,7 @@ SCENARIO("DynamicArray::Get") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("getting an element at index in [0, size)") {
-      const int index = GENERATE_COPY(range(0, size));
+      const int index = GENERATE_REF(range(0, size));
 
       THEN("element at the specified index should be returned") {
         const int elem_at_index = elems[index];
@@ -100,7 +100,7 @@ SCENARIO("DynamicArray::Get") {
 
     AND_WHEN("getting an element at index outside [0, size)") {
       const auto pred = [size](int idx) { return idx < 0 || idx >= size; };
-      const int index = GENERATE_COPY(filter(pred, range(-10, size + 11)));
+      const int index = GENERATE_REF(filter(pred, range(-10, size + 11)));
 
       THEN("nothing should be returned") {
         CHECK_FALSE(array.Get(index).has_value());
@@ -120,7 +120,7 @@ SCENARIO("DynamicArray::Set") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("setting an element at any index") {
-      const int set_index = GENERATE_COPY(range(-5, capacity + 6));
+      const int set_index = GENERATE_REF(range(-5, capacity + 6));
       const int set_elem = GENERATE(take(5, random(0, 100)));
 
       REQUIRE_FALSE(array.Set(set_index, set_elem));
@@ -142,7 +142,7 @@ SCENARIO("DynamicArray::Set") {
 
   AND_GIVEN("array with one or more elements") {
     const int capacity = GENERATE(range(1, 6));
-    const int size = GENERATE_COPY(range(1, capacity + 1));
+    const int size = GENERATE_REF(range(1, capacity + 1));
 
     const auto elems = utils::rand_array(size, 0, 100, true);
 
@@ -152,7 +152,7 @@ SCENARIO("DynamicArray::Set") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("setting an element at index in [0, size)") {
-      const int set_index = GENERATE_COPY(range(0, size));
+      const int set_index = GENERATE_REF(range(0, size));
       const int set_elem = GENERATE(take(5, random(0, 100)));
 
       REQUIRE(array.Set(set_index, set_elem));
@@ -174,7 +174,7 @@ SCENARIO("DynamicArray::Set") {
 
     AND_WHEN("setting an element at index outside [0, size)") {
       const auto pred = [size](int idx) { return idx < 0 || idx >= size; };
-      const int set_index = GENERATE_COPY(filter(pred, range(-5, size + 6)));
+      const int set_index = GENERATE_REF(filter(pred, range(-5, size + 6)));
 
       const int set_elem = GENERATE(take(5, random(0, 100)));
 
@@ -201,7 +201,7 @@ SCENARIO("DynamicArray::IndexOf") {
 
   GIVEN("array with one or more elements") {
     const int capacity = GENERATE(range(1, 11));
-    const int size = GENERATE_COPY(range(1, capacity + 1));
+    const int size = GENERATE_REF(range(1, capacity + 1));
 
     const auto elems = utils::rand_array(size, 0, 100);
 
@@ -211,7 +211,7 @@ SCENARIO("DynamicArray::IndexOf") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("finding index of an existing element") {
-      const int index = GENERATE_COPY(range(0, size));
+      const int index = GENERATE_REF(range(0, size));
       const int find_elem = elems[index];
 
       const int find_index = std::distance(elems.cbegin(), std::find(elems.cbegin(), elems.cend(), find_elem));
@@ -227,7 +227,7 @@ SCENARIO("DynamicArray::Contains") {
 
   GIVEN("array of one or more elements") {
     const int capacity = GENERATE(range(1, 11));
-    const int size = GENERATE_COPY(range(1, capacity + 1));
+    const int size = GENERATE_REF(range(1, capacity + 1));
 
     const auto elems = utils::rand_array(size, 0, 100);
 
@@ -237,7 +237,7 @@ SCENARIO("DynamicArray::Contains") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("checking if it contains an existing element") {
-      const int index = GENERATE_COPY(range(0, size));
+      const int index = GENERATE_REF(range(0, size));
       const int elem = elems[index];
 
       THEN("contains should return true") {
@@ -251,7 +251,7 @@ SCENARIO("DynamicArray::Resize") {
 
   GIVEN("array with zero or more elements: size <= capacity") {
     const int capacity = GENERATE(range(1, 11));
-    const int size = GENERATE_COPY(range(0, capacity + 1));
+    const int size = GENERATE_REF(range(0, capacity + 1));
 
     const auto elems = utils::rand_array(size, 0, 100, true);
 
@@ -261,7 +261,7 @@ SCENARIO("DynamicArray::Resize") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("resizing to a new capacity <= previous capacity") {
-      const int new_capacity = GENERATE_COPY(range(-10, capacity + 1));
+      const int new_capacity = GENERATE_REF(range(-10, capacity + 1));
 
       REQUIRE_FALSE(array.Resize(new_capacity));
 
@@ -281,7 +281,7 @@ SCENARIO("DynamicArray::Resize") {
     }
 
     AND_WHEN("resizing to a new capacity > previous capacity") {
-      const int new_capacity = GENERATE_COPY(range(capacity + 1, capacity + 6));
+      const int new_capacity = GENERATE_REF(range(capacity + 1, capacity + 6));
 
       REQUIRE(array.Resize(new_capacity));
 
@@ -305,7 +305,7 @@ SCENARIO("DynamicArray::Add") {
 
   GIVEN("array with zero or more elements: size < capacity") {
     const int capacity = GENERATE(range(1, 11));
-    const int size = GENERATE_COPY(range(0, capacity));
+    const int size = GENERATE_REF(range(0, capacity));
 
     const auto elems = utils::rand_array(size, 0, 100, true);
 
@@ -380,7 +380,7 @@ SCENARIO("DynamicArray::Insert") {
 
   GIVEN("array with zero or more elements: size < capacity") {
     const int capacity = GENERATE(range(1, 6));
-    const int size = GENERATE_COPY(range(0, capacity));
+    const int size = GENERATE_REF(range(0, capacity));
 
     const auto elems = utils::rand_array(size, 0, 100, true);
 
@@ -390,7 +390,7 @@ SCENARIO("DynamicArray::Insert") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("inserting an element at index in [0, size]") {
-      const int insert_index = GENERATE_COPY(range(0, size + 1));
+      const int insert_index = GENERATE_REF(range(0, size + 1));
       const int insert_elem = GENERATE(take(5, random(0, 100)));
 
       CAPTURE(array.toVector(capacity), elems, insert_elem);
@@ -418,7 +418,7 @@ SCENARIO("DynamicArray::Insert") {
 
     AND_WHEN("inserting an element at index outside [0, size]") {
       const auto pred = [size](int idx) { return idx < 0 || idx >= size + 1; };
-      const int insert_index = GENERATE_COPY(filter(pred, range(-10, size + 11)));
+      const int insert_index = GENERATE_REF(filter(pred, range(-10, size + 11)));
 
       const int insert_elem = GENERATE(take(5, random(0, 100)));
 
@@ -450,7 +450,7 @@ SCENARIO("DynamicArray::Insert") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("inserting an element at index in [0, size]") {
-      const int insert_index = GENERATE_COPY(range(0, capacity + 1));
+      const int insert_index = GENERATE_REF(range(0, capacity + 1));
       const int insert_elem = GENERATE(take(5, random(0, 100)));
 
       REQUIRE(array.Insert(insert_index, insert_elem));
@@ -477,7 +477,7 @@ SCENARIO("DynamicArray::Insert") {
 
     AND_WHEN("inserting an element at index outside [0, size]") {
       const auto pred = [capacity](int idx) { return idx < 0 || idx >= capacity + 1; };
-      const int insert_index = GENERATE_COPY(filter(pred, range(-5, capacity + 6)));
+      const int insert_index = GENERATE_REF(filter(pred, range(-5, capacity + 6)));
 
       const int insert_elem = GENERATE(take(5, random(0, 100)));
 
@@ -511,7 +511,7 @@ SCENARIO("DynamicArray::Remove") {
     REQUIRE(array.capacity() == capacity);
 
     WHEN("removing an element at any index") {
-      const int remove_index = GENERATE_COPY(range(-10, capacity + 11));
+      const int remove_index = GENERATE_REF(range(-10, capacity + 11));
 
       REQUIRE_FALSE(array.Remove(remove_index).has_value());
 
@@ -534,7 +534,7 @@ SCENARIO("DynamicArray::Remove") {
 
   AND_GIVEN("array with one or more elements") {
     const int capacity = GENERATE(range(1, 11));
-    const int size = GENERATE_COPY(range(1, capacity + 1));
+    const int size = GENERATE_REF(range(1, capacity + 1));
 
     const auto elems = utils::rand_array(size, 0, 100, true);
 
@@ -571,7 +571,7 @@ SCENARIO("DynamicArray::Remove") {
 
     AND_WHEN("removing an element at index outside [0, size)") {
       const auto pred = [size](int idx) { return idx < 0 || idx >= size; };
-      const int remove_index = GENERATE_COPY(filter(pred, range(-10, capacity + 11)));
+      const int remove_index = GENERATE_REF(filter(pred, range(-10, capacity + 11)));
 
       CHECK_FALSE(array.Remove(remove_index).has_value());
 

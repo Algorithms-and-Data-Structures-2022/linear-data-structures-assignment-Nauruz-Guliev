@@ -65,7 +65,7 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::Remove(int index) {
-    if (index < 0 || index >= size_) {
+    if (index >= size_ || index < 0) {
       return std::nullopt;
     }
     int* data_arr = new int[capacity_];
@@ -74,8 +74,8 @@ namespace assignment {
     for (int i = index; i < size_ - 1; i++) {
       data_arr[i] = data_[i + 1];
     }
-    data_ = data_arr;
     size_--;
+    data_ = data_arr;
     return deletedElement;
   }
 

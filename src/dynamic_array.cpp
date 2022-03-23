@@ -68,11 +68,9 @@ namespace assignment {
     if (index < 0 || index >= size_) {
       return std::nullopt;
     }
-    int deletedElement = data_[index];
     int* data_arr = new int[capacity_];
-    for (int i = 0; i < index; i++) {
-      data_arr[i] = data_[i];
-    }
+    std::copy(&data_[0], &data_[0]+index, data_arr);
+    int deletedElement = data_[index];
     for (int i = index; i < size_ - 1; i++) {
       data_arr[i] = data_[i + 1];
     }

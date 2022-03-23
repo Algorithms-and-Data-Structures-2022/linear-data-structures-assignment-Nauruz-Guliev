@@ -61,14 +61,16 @@ namespace assignment {
   std::optional<int> DynamicArray::Remove(int index) {
     if (index < 0 || index >= size_) {
       return std::nullopt;
-    }else {
-      int deletedElement = data_[index];
-      for (int i = index; i < size_ - 1; i++){
-        data_[i] = data_[i+1];
-      }
-      size_--;
-      return deletedElement;
     }
+
+    int value = data_[index];
+
+    for (int i = index; i < size_; i++) {
+      data_[i] = data_[i + 1];
+    }
+
+    size_--;
+    return value;
   }
 
   void DynamicArray::Clear() {

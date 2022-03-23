@@ -65,18 +65,16 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::Remove(int index) {
-    if (index >= size_ || index < 0) {
+    if (index < 0 || index >= size_) {
       return std::nullopt;
+    }else {
+      int deletedElement = data_[index];
+      for (int i = index; i < size_ - 1; i++){
+        data_[i] = data_[i+1];
+      }
+      size_--;
+      return deletedElement;
     }
-    int* data_arr = new int[capacity_];
-    std::copy(&data_[0], &data_[0]+index, data_arr);
-    int deletedElement = data_[index];
-    for (int i = index; i < size_ - 1; i++) {
-      data_arr[i] = data_[i + 1];
-    }
-    size_--;
-    data_ = data_arr;
-    return deletedElement;
   }
 
   void DynamicArray::Clear() {
